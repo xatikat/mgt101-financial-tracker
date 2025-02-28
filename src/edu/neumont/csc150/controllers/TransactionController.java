@@ -33,7 +33,7 @@ public class TransactionController {
                     return new Expense();
                 }
                 default -> TrackerUI.displayIncorrectTransactionType();
-            };
+            }
         } while (true);
     }
 
