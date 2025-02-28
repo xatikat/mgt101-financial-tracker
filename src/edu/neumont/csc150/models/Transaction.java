@@ -72,4 +72,15 @@ public class Transaction implements Comparable<Transaction> {
             return dateCompare;
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name:\t\t\t\t").append(getName()).append("\n");
+        sb.append("Amount:\t\t\t\t").append(getAmount()).append("\n");
+        sb.append("Date:\t\t\t\t").append(getDate()).append("\n");
+        sb.append("Category:\t\t\t").append(getCategory()).append("\n");
+        sb.append("Description:\t\t").append(getDescription()).append("\n");
+        return sb.toString();
+    }
 }

@@ -2,59 +2,66 @@ package edu.neumont.csc150.controllers;
 
 import edu.neumont.csc150.models.*;
 import edu.neumont.csc150.models.enums.TransactionCategory;
-import edu.neumont.csc150.views.TrackerUI;
+import edu.neumont.csc150.views.TransactionUI;
 
 import java.time.LocalDate;
 
 public class TransactionController {
 
-    public static Transaction createTransaction() {
-        Transaction transaction = getTransactionType();
+    /**
+     * Creates a transaction using user inputs
+     * @return Created transaction with inputted properties
+     */
+    public static Transaction createTxn() {
+        Transaction transaction = getTxnType();
 
         //create transaction
-        String name = TrackerUI.getTransactionName();
-        int amount = TrackerUI.getTransactionAmount();
-        LocalDate date = TrackerUI.getTransactionDate();
-        TransactionCategory category = getTransactionCategory();
-        //TODO description setting
-        transaction.setProperties(name, amount, date, category, "");
+        String name = TransactionUI.getTxnNameInput();
+        int amount = TransactionUI.getTxnAmountInput();
+        LocalDate date = TransactionUI.getTxnDateInput();
+        TransactionCategory category = getTxnCat();
+        String description = TransactionUI.getTxnDescInput();
+        transaction.setProperties(name, amount, date, category, description);
 
         return transaction;
     }
 
-    private static Transaction getTransactionType() {
+    private static Transaction getTxnType() {
         // getting type
         do {
-            switch (TrackerUI.getTransactionType()) {
+            switch (TransactionUI.getTxnTypeInput()) {
                 case "income" -> {
                     return new Income();
                 }
                 case "expense" -> {
                     return new Expense();
                 }
-                default -> TrackerUI.displayIncorrectTransactionType();
+                default -> TransactionUI.displayIncorrectTxnType();
             }
         } while (true);
     }
 
-    private static TransactionCategory getTransactionCategory() {
+    private static TransactionCategory getTxnCat() {
         do {
-            String categoryS = TrackerUI.getTransactionCategory();
+            String categoryS = TransactionUI.getTxnCatInput();
             try {
                 return TransactionCategory.valueOf(categoryS.toUpperCase());
             } catch (IllegalArgumentException e) {
                 // check if user wanted to list categories
                 if (categoryS.equals("list")) {
-                    TrackerUI.displayValidCategories();
+                    TransactionUI.displayValidCategories();
                 } else {
                     // invalid category
-                    TrackerUI.displayInvalidCategory();
+                    TransactionUI.displayInvalidCategory();
                 }
             }
         } while (true);
     }
 
-    public static void updateTransaction() {}
 
-    public static void deleteTransaction() {}
+    // TODO updating / editing existing txns :p
+    public static Transaction editTxn(Transaction txn) {
+
+        return txn;
+    }
 }
