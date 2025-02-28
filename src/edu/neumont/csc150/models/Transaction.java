@@ -4,7 +4,7 @@ import edu.neumont.csc150.models.enums.TransactionCategory;
 
 import java.time.LocalDate;
 
-public class Transaction {
+public class Transaction implements Comparable<Transaction> {
     private String name;
     private int amount;
     private LocalDate date;
@@ -61,5 +61,15 @@ public class Transaction {
         setDate(date);
         setCategory(category);
         setDescription(description);
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        int dateCompare = getDate().compareTo(o.getDate())*-1;
+        if (dateCompare == 0) {
+            return getName().compareTo(o.getName());
+        } else {
+            return dateCompare;
+        }
     }
 }

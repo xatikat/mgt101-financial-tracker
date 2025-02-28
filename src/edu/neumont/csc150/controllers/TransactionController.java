@@ -8,33 +8,35 @@ import java.time.LocalDate;
 
 public class TransactionController {
 
-    public static void addTransaction() {
-        // getting type
-        boolean isValidType = true;
-        Transaction transaction = null;
-        do {
-            switch (TrackerUI.getTransactionType()) {
-                case "income":
-                    transaction = new Income();
-                    isValidType = false;
-                    break;
-                case "expense":
-                    transaction = new Expense();
-                    isValidType = false;
-                    break;
-                default:
-                    TrackerUI.displayIncorrectTransactionType();
-                    break;
-            };
-        } while (isValidType);
+    public static Transaction createTransaction() {
+        Transaction transaction = getTransactionType();
 
-        //
+        //create transaction
         String name = TrackerUI.getTransactionName();
         int amount = TrackerUI.getTransactionAmount();
         LocalDate date = TrackerUI.getTransactionDate();
         TransactionCategory category = getTransactionCategory();
-
+        //TODO description setting
         transaction.setProperties(name, amount, date, category, "");
+
+        return transaction;
+    }
+
+    private static Transaction getTransactionType() {
+        // getting type
+        do {
+            switch (TrackerUI.getTransactionType()) {
+                case "income" -> {
+                    return new Income();
+                }
+                case "expense" -> {
+                    new Expense();
+                }
+                default -> {
+                    TrackerUI.displayIncorrectTransactionType();
+                }
+            };
+        } while (true);
     }
 
     private static TransactionCategory getTransactionCategory() {
