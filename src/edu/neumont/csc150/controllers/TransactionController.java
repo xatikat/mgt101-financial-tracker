@@ -30,11 +30,9 @@ public class TransactionController {
                     return new Income();
                 }
                 case "expense" -> {
-                    new Expense();
+                    return new Expense();
                 }
-                default -> {
-                    TrackerUI.displayIncorrectTransactionType();
-                }
+                default -> TrackerUI.displayIncorrectTransactionType();
             };
         } while (true);
     }

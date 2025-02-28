@@ -1,7 +1,6 @@
 package edu.neumont.csc150.controllers;
 
 import edu.neumont.csc150.models.Transaction;
-import edu.neumont.csc150.models.TransactionDateComparer;
 import edu.neumont.csc150.models.TransactionLog;
 import edu.neumont.csc150.models.enums.TransactionCategory;
 
