@@ -18,7 +18,7 @@ public class AppController {
                 case 2 -> {
                     // Individual transaction view
                     //TODO
-                    if (txnLog.size() > 0) {
+                    if (!txnLog.isEmpty()) {
                         TransactionViewController.run(txnLog);
                     } else {
                         TransactionViewUI.displayNoTxnError();

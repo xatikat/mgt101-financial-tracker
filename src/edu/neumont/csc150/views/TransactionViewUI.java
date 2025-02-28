@@ -20,7 +20,7 @@ public class TransactionViewUI {
                 case "quit", "q" -> {return "q";}
                 case "help", "h" -> displayAvailableCommands();
                 default -> displayInvalidCommand();
-            };
+            }
         }
     }
 

@@ -10,12 +10,8 @@ public class TransactionViewController {
         do {
             viewTransaction(txnLog);
             switch (TransactionViewUI.getTransactionViewInput()) {
-                case "n" -> {
-                    txnLog.nextTxn();
-                }
-                case "p" -> {
-                    txnLog.previousTxn();
-                }
+                case "n" -> txnLog.nextTxn();
+                case "p" -> txnLog.previousTxn();
                 case "e" -> {
                     //todo edit current txn
                     Transaction newTxn = TransactionController.editTxn(txnLog.get(txnLog.getTxnIndex()));
