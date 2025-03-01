@@ -13,12 +13,13 @@ public class TransactionViewController {
                 case "n" -> txnLog.nextTxn();
                 case "p" -> txnLog.previousTxn();
                 case "e" -> {
-                    //todo edit current txn
+                    //edits current txn
                     Transaction newTxn = TransactionController.editTxn(txnLog.get(txnLog.getTxnIndex()));
                     txnLog.set(txnLog.getTxnIndex(), newTxn);
+                    txnLog.sortByDate();
                 }
                 case "d" -> {
-                    //todo delete current txn
+                    //deletes current txn
                     // todo test with many transactions
                     txnLog.remove(txnLog.getTxnIndex());
                 }

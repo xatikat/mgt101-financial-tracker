@@ -15,7 +15,7 @@ public class TransactionViewUI {
                 case "next", "n" -> {return "n";}
                 case "previous", "prev", "p" -> {return "p";}
                 case "edit", "e" -> {return "e";}
-                // TODO confirm deletion
+                // TODO confirm user wants to actually delete
                 case "delete", "del", "d" -> {return "d";}
                 case "quit", "q" -> {return "q";}
                 case "help", "h" -> displayAvailableCommands();

@@ -25,7 +25,7 @@ public class TransactionUI {
     }
 
     public static int getTxnAmountInput() {
-        return Console.getIntInput("Enter the amount of the transaction:", 0, Integer.MAX_VALUE, Console.TextColor.BLUE);
+        return Console.getIntInput("Enter the amount of the transaction:", 1, Integer.MAX_VALUE, Console.TextColor.BLUE);
     }
 
     public static LocalDate getTxnDateInput() {
@@ -53,5 +53,29 @@ public class TransactionUI {
 
     public static String getTxnDescInput() {
         return Console.getStringInput("Enter the description of the transaction (or leave blank):", true, Console.TextColor.BLUE);
+    }
+
+    public static String getTxnEditValueInput() {
+        while (true) {
+            String choiceS = Console.getStringInput("What property would you like to edit? (or type quit to quit)", true, Console.TextColor.BLUE);
+            switch(choiceS) {
+                case "name" -> {return "name";}
+                case "amount" -> {return "amount";}
+                case "date" -> {return "date";}
+                case "category" -> {return "category";}
+                case "description" -> {return "description";}
+                case "", "quit", "exit" -> {return "quit";}
+                default -> displayInvalidEditValue();
+            }
+        }
+    }
+
+    public static void displayInvalidEditValue() {
+        Console.writeLn("Please enter a valid property!\n(Name, amount, date, category, description)", Console.TextColor.RED);
+    }
+
+    public static void displayPreviousValue(String value) {
+        Console.writeLn("Current value is: " + value, Console.TextColor.YELLOW);
+
     }
 }

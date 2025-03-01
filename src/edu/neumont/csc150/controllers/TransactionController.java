@@ -58,10 +58,45 @@ public class TransactionController {
         } while (true);
     }
 
-
     // TODO updating / editing existing txns :p
     public static Transaction editTxn(Transaction txn) {
+        boolean isEditing = true;
 
+        // get old values
+        String name = txn.getName();
+        int amount = txn.getAmount();
+        LocalDate date = txn.getDate();
+        TransactionCategory category = txn.getCategory();
+        String description = txn.getDescription();
+
+        while (isEditing) {
+            // choose which value to edit
+            switch (TransactionUI.getTxnEditValueInput()) {
+                case "name" -> {
+                    TransactionUI.displayPreviousValue(name);
+                    name = TransactionUI.getTxnNameInput();
+                }
+                case "amount" -> {
+                    TransactionUI.displayPreviousValue(String.valueOf(amount));
+                    amount = TransactionUI.getTxnAmountInput();
+                }
+                case "date" -> {
+                    TransactionUI.displayPreviousValue(date.toString());
+                    date = TransactionUI.getTxnDateInput();
+                }
+                case "category" -> {
+                    TransactionUI.displayPreviousValue(category.toString());
+                    category = getTxnCat();
+                }
+                case "description" -> {
+                    TransactionUI.displayPreviousValue(description);
+                    description = TransactionUI.getTxnDescInput();
+                }
+                case "quit" -> isEditing = false;
+            }
+        }
+
+        txn.setProperties(name, amount, date, category, description);
         return txn;
     }
 }
