@@ -5,8 +5,19 @@ import edu.neumont.csc150.views.*;
 
 public class AppController {
     private final TransactionLog txnLog = new TransactionLog();
+    //TODO remove this once users are created
+    private final String username = "default";
 
     public void run() {
+        // load save from username
+        if (SaveController.doesSaveExist(username)) {
+            TransactionLog saveData = SaveController.loadState(username);
+            if (!saveData.isEmpty()) {
+                txnLog.addAll(saveData);
+                txnLog.sortByDate();
+            }
+        }
+
         boolean doContinue = true;
         do {
             switch(AppUI.displayMainMenu()) {
@@ -35,9 +46,11 @@ public class AppController {
                 }
                 case 6 -> {
                     // Save Data
+                    SaveController.saveState(username, txnLog);
                 }
                 default -> {
                     // Quit
+                    SaveController.saveState(username, txnLog);
                     doContinue = false;
                 }
             }

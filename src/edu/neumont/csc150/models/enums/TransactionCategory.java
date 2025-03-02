@@ -4,7 +4,8 @@ public enum TransactionCategory {
     // main categories
     NEEDS, WANTS,
     SAVINGS, DEBTS,
-    BILLS
+    BILLS, INCOME,
+    WORK,
     // subcategories (could add more)
     //GROCERIES, INSURANCE,
     //TRANSPORTATION
@@ -17,6 +18,8 @@ public enum TransactionCategory {
             case WANTS -> "Wants";
             case SAVINGS -> "Savings";
             case DEBTS -> "Debts";
+            case INCOME -> "Income";
+            case WORK -> "Work";
             //case INSURANCE -> "Insurance";
             //case GROCERIES -> "Groceries";
             //case TRANSPORTATION -> "Transportation";

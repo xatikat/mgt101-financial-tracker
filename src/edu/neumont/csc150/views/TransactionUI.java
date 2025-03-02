@@ -21,7 +21,7 @@ public class TransactionUI {
     }
 
     public static String getTxnNameInput() {
-        return Console.getStringInput("Enter the name of the transaction:", false, Console.TextColor.BLUE);
+        return Console.getStringInput("Enter the name of the transaction:", false, Console.TextColor.BLUE).replaceAll(",", "");
     }
 
     public static int getTxnAmountInput() {
@@ -52,7 +52,7 @@ public class TransactionUI {
     }
 
     public static String getTxnDescInput() {
-        return Console.getStringInput("Enter the description of the transaction (or leave blank):", true, Console.TextColor.BLUE);
+        return Console.getStringInput("Enter the description of the transaction (or leave blank):", true, Console.TextColor.BLUE).replaceAll(",", "");
     }
 
     public static String getTxnEditValueInput() {

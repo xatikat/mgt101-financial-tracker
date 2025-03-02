@@ -10,7 +10,8 @@ public class TestController {
     private final TransactionLog transactionLog = new TransactionLog();
 
     public void run() {
-        testSort();
+        //testSort();
+        SaveController.run();
     }
 
     public void testSort() {

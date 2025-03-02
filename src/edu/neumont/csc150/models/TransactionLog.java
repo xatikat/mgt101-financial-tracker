@@ -20,20 +20,20 @@ public class TransactionLog extends ArrayList<Transaction>{
     }
 
     public void nextTxn() {
-        // loop above array size if necessary
-        int newIndex = getTxnIndex() - 1;
-        if (newIndex < 0) {
-            newIndex = this.size() - 1;
+        // loop below array size if necessary
+        int newIndex = getTxnIndex() + 1;
+        if (newIndex >= this.size()) {
+            newIndex = 0;
         }
 
         setTxnIndex(newIndex);
     }
 
     public void previousTxn() {
-        // loop below array size if necessary
-        int newIndex = getTxnIndex() + 1;
-        if (newIndex >= this.size()) {
-            newIndex = 0;
+        // loop above array size if necessary
+        int newIndex = getTxnIndex() - 1;
+        if (newIndex < 0) {
+            newIndex = this.size() - 1;
         }
 
         setTxnIndex(newIndex);
