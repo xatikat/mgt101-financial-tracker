@@ -8,6 +8,10 @@ public class TransactionViewUI {
         Console.writeLn(txn.toString(), Console.TextColor.YELLOW);
     }
 
+    /**
+     * Gets command from user for individual Transaction view
+     * @return
+     */
     public static String getTransactionViewInput() {
         while(true) {
             String choiceS = Console.getStringInput("Enter a command (type help for available commands):", false, Console.TextColor.BLUE).toLowerCase();
@@ -15,7 +19,6 @@ public class TransactionViewUI {
                 case "next", "n" -> {return "n";}
                 case "previous", "prev", "p" -> {return "p";}
                 case "edit", "e" -> {return "e";}
-                // TODO confirm user wants to actually delete
                 case "delete", "del", "d" -> {return "d";}
                 case "goto", "g" -> {return "g";}
                 case "quit", "q" -> {return "q";}

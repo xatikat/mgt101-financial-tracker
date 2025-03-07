@@ -5,13 +5,6 @@ import edu.neumont.csc150.models.enums.TransactionCategory;
 import java.time.LocalDate;
 
 public class TransactionUI {
-
-    public static String displayLoginScreen() {
-        return Console.getStringInput("""
-                Please enter your username:
-                """).toLowerCase();
-    }
-
     public static String getTxnTypeInput() {
         return Console.getStringInput("Would you like to add an income or an expense?", false, Console.TextColor.BLUE).toLowerCase();
     }

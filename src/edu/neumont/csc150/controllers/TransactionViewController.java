@@ -18,10 +18,10 @@ public class TransactionViewController {
                     Transaction newTxn = TransactionController.editTxn(txnLog.get(txnLog.getTxnIndex()));
                     txnLog.set(txnLog.getTxnIndex(), newTxn);
                     txnLog.sortByDate();
+                    SaveController.saveState(txnLog.getName(), txnLog);
                 }
                 case "d" -> {
                     //deletes current txn
-                    // todo test with many transactions
                     if (TransactionViewUI.confirmDeletion()) {
                         txnLog.remove(txnLog.getTxnIndex());
                     }

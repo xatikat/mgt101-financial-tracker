@@ -26,6 +26,10 @@ public class TransactionController {
         return transaction;
     }
 
+    /**
+     * Gets the transaction type the user wants from an input
+     * @return New Transaction object of user-specified type
+     */
     private static Transaction getTxnType() {
         // getting type
         do {

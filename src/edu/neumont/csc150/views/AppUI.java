@@ -13,6 +13,10 @@ public class AppUI {
                 """, 1, 8, Console.TextColor.BLUE);
     }
 
+    public static void displayHR() {
+        Console.writeLn("\n===================================\n", Console.TextColor.CYAN);
+    }
+
     public static int getGotoInput(int collSize) {
         int choice = Console.getIntInput("Enter the transaction to go to:", 1, collSize, Console.TextColor.BLUE);
         Console.writeLn("");
@@ -26,6 +30,18 @@ public class AppUI {
     }
 
     public static boolean getUserContinueIfUncreated() {
-        return Console.getBooleanInput("This user does not exist yet, would you like to create a save for it?", "yes", "no", Console.TextColor.BLUE);
+        boolean choice = Console.getBooleanInput("This user does not exist yet, would you like to create a save for it?", "yes", "no", Console.TextColor.BLUE);
+        Console.writeLn("");
+        return choice;
+    }
+
+    public static String getPasswordInput() {
+        String username = Console.getStringInput("Enter your password:", false, Console.TextColor.BLUE);
+        Console.writeLn("");
+        return username;
+    }
+
+    public static void displayLoginError() {
+        Console.writeLn("Username or password is incorrect! Please try again.\n", Console.TextColor.RED);
     }
 }

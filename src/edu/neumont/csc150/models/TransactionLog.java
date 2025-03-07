@@ -3,6 +3,7 @@ package edu.neumont.csc150.models;
 import java.util.ArrayList;
 
 public class TransactionLog extends ArrayList<Transaction>{
+    private String name;
     private int txnIndex = 0;
 
     public int getTxnIndex() {
@@ -10,6 +11,13 @@ public class TransactionLog extends ArrayList<Transaction>{
     }
     public void setTxnIndex(int txnIndex) {
         this.txnIndex = txnIndex;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     // my own methods on top of the ArrayList class

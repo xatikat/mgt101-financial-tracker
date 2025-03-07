@@ -2,24 +2,21 @@ package edu.neumont.csc150.controllers;
 
 import edu.neumont.csc150.models.*;
 import edu.neumont.csc150.views.*;
+import edu.neumont.csc150.controllers.UserController;
+
+import java.io.FileNotFoundException;
 
 public class AppController {
     private static final TransactionLog txnLog = new TransactionLog();
-    //TODO remove this once users are created
-    private final String username = "default";
 
     public void run() {
         // load save from username
-        if (SaveController.doesSaveExist(username)) {
-            TransactionLog saveData = SaveController.loadState(username);
-            if (!saveData.isEmpty()) {
-                txnLog.addAll(saveData);
-                txnLog.sortByDate();
-            }
-        }
+
+        loadData(login());
 
         boolean doContinue = true;
         do {
+            AppUI.displayHR();
             switch(AppUI.displayMainMenu()) {
                 case 1 -> {
                     // Add income / expense page
@@ -28,7 +25,6 @@ public class AppController {
                 }
                 case 2 -> {
                     // Individual transaction view
-                    //TODO
                     if (!txnLog.isEmpty()) {
                         TransactionViewController.run(txnLog);
                     } else {
@@ -44,18 +40,29 @@ public class AppController {
                 case 5 -> {
                     // Goals page
                 }
-                case 6 -> {
-                    // Save Data
-                    SaveController.saveState(username, txnLog);
-                }
                 default -> {
                     // Quit
-                    SaveController.saveState(username, txnLog);
                     doContinue = false;
                 }
             }
+            // save after every main menu action is completed
+            SaveController.saveState(txnLog.getName(), txnLog);
         }
         while (doContinue);
+    }
+
+    /**
+     * Loads data to class-level Library with SaveManager given a username
+     * @param username Username to load data from
+     */
+    private static void loadData(String username) {
+        txnLog.setName(username);
+        if (SaveController.doesSaveExist(username)) {
+            TransactionLog loadData = SaveController.loadState(username);
+            if (!loadData.isEmpty()) {
+                txnLog.copyFrom(loadData);
+            }
+        }
     }
 
     /**
@@ -65,26 +72,27 @@ public class AppController {
      */
     private static String login() {
         while (true) {
+            // get username and check if it already exists
+            // if it does, get password and check both creds against database
+            // return username if creds exist, otherwise we will display login error
             String username = AppUI.getUsernameInput();
-            if (!SaveController.doesSaveExist(username)) {
+            if (UserController.checkUsername(username)) {
+                String password = AppUI.getPasswordInput();
+                if (UserController.checkCredentials(username, password)) {
+                    return username;
+                } else {
+                    AppUI.displayLoginError();
+                }
+            }
+            // if it doesn't, confirm user wants to continue creating
+            // otherwise loop over again (like if they typo username)
+            else {
                 if (AppUI.getUserContinueIfUncreated()) {
+                    String password = AppUI.getPasswordInput();
+                    UserController.addCredsToFile(username, password);
                     return username;
                 }
-            } else {
-                return username;
             }
-        }
-    }
-
-    /**
-     * Loads data to class-level Library with SaveManager given a username
-     * @param username Username to load data from
-     */
-    private static void loadData(String username) {
-        //txnLog.setName(username);
-        TransactionLog loadData = SaveController.loadState(username);
-        if (loadData != null) {
-            txnLog.copyFrom(loadData);
         }
     }
 }
