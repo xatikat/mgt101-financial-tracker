@@ -16,12 +16,12 @@ public class TransactionViewUI {
         while(true) {
             String choiceS = Console.getStringInput("Enter a command (type help for available commands):", false, Console.TextColor.BLUE).toLowerCase();
             switch (choiceS) {
-                case "next", "n" -> {return "n";}
-                case "previous", "prev", "p" -> {return "p";}
-                case "edit", "e" -> {return "e";}
-                case "delete", "del", "d" -> {return "d";}
-                case "goto", "g" -> {return "g";}
-                case "quit", "q" -> {return "q";}
+                case "next", "n" -> {return "next";}
+                case "previous", "prev", "p" -> {return "previous";}
+                case "edit", "e" -> {return "edit";}
+                case "delete", "del", "d" -> {return "delete";}
+                case "goto", "g" -> {return "goto";}
+                case "quit", "q" -> {return "quit";}
                 case "help", "h" -> displayAvailableCommands();
                 default -> displayInvalidCommand();
             }

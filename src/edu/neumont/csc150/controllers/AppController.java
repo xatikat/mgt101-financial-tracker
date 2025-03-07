@@ -10,8 +10,7 @@ public class AppController {
     private static final TransactionLog txnLog = new TransactionLog();
 
     public void run() {
-        // load save from username
-
+        // let user login and attempt to load data
         loadData(login());
 
         boolean doContinue = true;
@@ -26,7 +25,7 @@ public class AppController {
                 case 2 -> {
                     // Individual transaction view
                     if (!txnLog.isEmpty()) {
-                        TransactionViewController.run(txnLog);
+                        TransactionViewController.viewTransactionView(txnLog);
                     } else {
                         TransactionViewUI.displayNoTxnError();
                     }

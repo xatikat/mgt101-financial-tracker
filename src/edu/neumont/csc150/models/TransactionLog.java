@@ -75,4 +75,13 @@ public class TransactionLog extends ArrayList<Transaction>{
         this.setTxnIndex(Math.max(index-1, 0));
         return removedTxn;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Transaction t: this.reversed()) {
+            sb.append(t.toShortString());
+        }
+        return sb.toString();
+    }
 }

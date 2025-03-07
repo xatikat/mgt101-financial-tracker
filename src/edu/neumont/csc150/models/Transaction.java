@@ -83,4 +83,17 @@ public class Transaction implements Comparable<Transaction> {
         sb.append("Description:\t\t").append(getDescription()).append("\n");
         return sb.toString();
     }
+
+    public String toShortString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getDate()).append(" - ");
+        if (this instanceof Expense) {
+            sb.append("(").append(getAmount()).append(")");
+        } else {
+            sb.append(getAmount());
+        }
+        sb.append(" - ");
+        sb.append(getName());
+        return sb.toString();
+    }
 }

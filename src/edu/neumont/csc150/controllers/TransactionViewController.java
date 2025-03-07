@@ -6,31 +6,31 @@ import edu.neumont.csc150.views.AppUI;
 import edu.neumont.csc150.views.TransactionViewUI;
 
 public class TransactionViewController {
-    public static void run(TransactionLog txnLog) {
+    public static void viewTransactionView(TransactionLog txnLog) {
         boolean doContinueViewing = true;
         do {
             viewTransaction(txnLog);
             switch (TransactionViewUI.getTransactionViewInput()) {
-                case "n" -> txnLog.nextTxn();
-                case "p" -> txnLog.previousTxn();
-                case "e" -> {
+                case "next" -> txnLog.nextTxn();
+                case "previous" -> txnLog.previousTxn();
+                case "edit" -> {
                     //edits current txn
                     Transaction newTxn = TransactionController.editTxn(txnLog.get(txnLog.getTxnIndex()));
                     txnLog.set(txnLog.getTxnIndex(), newTxn);
                     txnLog.sortByDate();
                     SaveController.saveState(txnLog.getName(), txnLog);
                 }
-                case "d" -> {
+                case "delete" -> {
                     //deletes current txn
                     if (TransactionViewUI.confirmDeletion()) {
                         txnLog.remove(txnLog.getTxnIndex());
                     }
                 }
-                case "g" -> {
+                case "goto" -> {
                     //goto command
                     txnLog.setTxnIndex(AppUI.getGotoInput(txnLog.size())-1);
                 }
-                case "q" -> doContinueViewing = false;
+                case "quit" -> doContinueViewing = false;
             }
             // in case there are no more left after being deleted
             if (txnLog.isEmpty()) {
