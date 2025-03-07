@@ -32,6 +32,7 @@ public class AppController {
                 }
                 case 3 -> {
                     // Transaction history page
+                    LogViewController.viewCollection(txnLog);
                 }
                 case 4 -> {
                     // Current balances page

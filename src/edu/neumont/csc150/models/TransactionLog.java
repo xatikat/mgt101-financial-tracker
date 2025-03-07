@@ -80,7 +80,7 @@ public class TransactionLog extends ArrayList<Transaction>{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Transaction t: this.reversed()) {
-            sb.append(t.toShortString());
+            sb.append(t.toShortString()).append('\n');
         }
         return sb.toString();
     }
