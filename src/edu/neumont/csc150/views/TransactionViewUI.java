@@ -17,6 +17,7 @@ public class TransactionViewUI {
                 case "edit", "e" -> {return "e";}
                 // TODO confirm user wants to actually delete
                 case "delete", "del", "d" -> {return "d";}
+                case "goto", "g" -> {return "g";}
                 case "quit", "q" -> {return "q";}
                 case "help", "h" -> displayAvailableCommands();
                 default -> displayInvalidCommand();
@@ -31,6 +32,7 @@ public class TransactionViewUI {
         Console.writeLn("previous (p)\t-\tgoes to the previous transaction", Console.TextColor.PURPLE);
         Console.writeLn("edit (e)\t\t-\tedit current transaction", Console.TextColor.PURPLE);
         Console.writeLn("delete (d)\t\t-\tdelete current transaction", Console.TextColor.PURPLE);
+        Console.writeLn("goto (g)\t\t-\tgo to a specific transaction in the list", Console.TextColor.PURPLE);
         Console.writeLn("quit (q)\t\t-\tgo back to the main menu", Console.TextColor.PURPLE);
     }
 
@@ -40,5 +42,20 @@ public class TransactionViewUI {
 
     public static void displayNoTxnError() {
         Console.writeLn("There are no transactions to be viewed.", Console.TextColor.RED);
+    }
+
+    /**
+     * Allows user to confirm the deletion of a transaction in the Log
+     * @return True if they chose to delete, false if not
+     */
+    public static boolean confirmDeletion() {
+        while (true) {
+            String choice = Console.getStringInput("Are you sure you want to delete this release? (Y/N)", false, Console.TextColor.BLUE).toLowerCase();
+            switch(choice) {
+                case "y", "yes" -> {return true;}
+                case "n", "no" -> {return false;}
+                default -> Console.writeLn("That is not a valid choice, please enter yes or no.", Console.TextColor.RED);
+            }
+        }
     }
 }

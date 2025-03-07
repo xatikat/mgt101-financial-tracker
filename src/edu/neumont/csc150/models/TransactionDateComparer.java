@@ -19,7 +19,7 @@ public class TransactionDateComparer implements Comparator<Transaction> {
 
         int dateCompare = t1.getDate().compareTo(t2.getDate())*-1;
         if (dateCompare == 0) {
-            return t1.getName().compareTo(t2.getName());
+            return t1.getName().compareToIgnoreCase(t2.getName());
         } else {
             return dateCompare;
         }

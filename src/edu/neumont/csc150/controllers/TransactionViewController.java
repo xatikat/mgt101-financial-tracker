@@ -2,6 +2,7 @@ package edu.neumont.csc150.controllers;
 
 import edu.neumont.csc150.models.Transaction;
 import edu.neumont.csc150.models.TransactionLog;
+import edu.neumont.csc150.views.AppUI;
 import edu.neumont.csc150.views.TransactionViewUI;
 
 public class TransactionViewController {
@@ -21,7 +22,13 @@ public class TransactionViewController {
                 case "d" -> {
                     //deletes current txn
                     // todo test with many transactions
-                    txnLog.remove(txnLog.getTxnIndex());
+                    if (TransactionViewUI.confirmDeletion()) {
+                        txnLog.remove(txnLog.getTxnIndex());
+                    }
+                }
+                case "g" -> {
+                    //goto command
+                    txnLog.setTxnIndex(AppUI.getGotoInput(txnLog.size())-1);
                 }
                 case "q" -> doContinueViewing = false;
             }

@@ -8,13 +8,13 @@ public class TransactionLog extends ArrayList<Transaction>{
     public int getTxnIndex() {
         return this.txnIndex;
     }
-    private void setTxnIndex(int txnIndex) {
+    public void setTxnIndex(int txnIndex) {
         this.txnIndex = txnIndex;
     }
 
     // my own methods on top of the ArrayList class
 
-    // can probably just be used as txnLog.get(txnLog.getTxnIndex());
+    //region NAVIGATION
     public Transaction viewTxn() {
       return this.get(getTxnIndex());
     }
@@ -38,10 +38,20 @@ public class TransactionLog extends ArrayList<Transaction>{
 
         setTxnIndex(newIndex);
     }
+    //endregion
 
-    // sorts earliest first
+    /**
+     * Sorts the ArrayList by date, earliest come sfirst
+     */
     public void sortByDate() {
         super.sort(new TransactionDateComparer());
+    }
+
+    /**
+     * Copies all transactions from another TransactionLog
+     */
+    public void copyFrom(TransactionLog other) {
+        this.addAll(other);
     }
 
     /**
