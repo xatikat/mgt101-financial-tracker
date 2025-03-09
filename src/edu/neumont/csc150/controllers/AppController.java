@@ -2,9 +2,6 @@ package edu.neumont.csc150.controllers;
 
 import edu.neumont.csc150.models.*;
 import edu.neumont.csc150.views.*;
-import edu.neumont.csc150.controllers.UserController;
-
-import java.io.FileNotFoundException;
 
 public class AppController {
     private static final TransactionLog txnLog = new TransactionLog();
