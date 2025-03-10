@@ -8,15 +8,6 @@ import java.util.List;
 
 public class LogViewUI {
     /**
-     * Displays a TransactionLog as a whole (UNUSED)
-     * @param txnLog TransactionLog to be displayed
-     */
-    public static void displayLog(TransactionLog txnLog) {
-        Console.writeLn("Transaction Log:", Console.TextColor.PURPLE);
-        Console.writeLn(txnLog.toString(), Console.TextColor.YELLOW);
-    }
-
-    /**
      * Displays a set of Transactions from a specific YearMonth date
      * @param date YearMonth date of the Transactions to be displayed
      * @param txns ArrayList of Transactions to be displayed
