@@ -64,9 +64,9 @@ public abstract class Transaction implements Comparable<Transaction> {
     }
 
     /**
-     * Sorts between
+     * Compares this transaction to another transaction by type (Income first, then Expense)
      * @param o the object to be compared.
-     * @return
+     * @return 0 if they are the same type, -1 if this txn is before, 1 if this txn is after
      */
     @Override
     public int compareTo(Transaction o) {

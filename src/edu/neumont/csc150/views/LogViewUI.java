@@ -1,7 +1,6 @@
 package edu.neumont.csc150.views;
 
 import edu.neumont.csc150.models.Transaction;
-import edu.neumont.csc150.models.TransactionLog;
 
 import java.time.YearMonth;
 import java.util.List;
