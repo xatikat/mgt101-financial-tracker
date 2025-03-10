@@ -10,7 +10,7 @@ public class TransactionViewUI {
 
     /**
      * Gets command from user for individual Transaction view
-     * @return
+     * @return Chosen command
      */
     public static String getTransactionViewInput() {
         while(true) {
