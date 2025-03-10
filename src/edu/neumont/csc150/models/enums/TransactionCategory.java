@@ -1,10 +1,10 @@
 package edu.neumont.csc150.models.enums;
 
-public enum TransactionCategory {
+public enum TransactionCategory implements Comparable<TransactionCategory> {
     // main categories
     NEEDS, WANTS,
-    SAVINGS, DEBTS,
-    BILLS, INCOME,
+    BILLS, DEBTS,
+    INCOME, SAVINGS,
     WORK,
     // subcategories (could add more)
     //GROCERIES, INSURANCE,

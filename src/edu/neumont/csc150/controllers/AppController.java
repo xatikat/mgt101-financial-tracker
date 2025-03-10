@@ -17,7 +17,7 @@ public class AppController {
                 case 1 -> {
                     // Add income / expense page
                     txnLog.add(TransactionController.createTxn());
-                    txnLog.sortByDate();
+                    txnLog.sort();
                 }
                 case 2 -> {
                     // Individual transaction view
@@ -58,6 +58,7 @@ public class AppController {
             TransactionLog loadData = SaveController.loadState(username);
             if (!loadData.isEmpty()) {
                 txnLog.copyFrom(loadData);
+                txnLog.sort();
             }
         }
     }

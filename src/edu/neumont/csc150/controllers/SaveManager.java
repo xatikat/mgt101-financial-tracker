@@ -1,5 +1,7 @@
 package edu.neumont.csc150.controllers;
 
+import edu.neumont.csc150.models.Expense;
+import edu.neumont.csc150.models.Income;
 import edu.neumont.csc150.models.Transaction;
 import edu.neumont.csc150.models.TransactionLog;
 import edu.neumont.csc150.models.enums.TransactionCategory;
@@ -23,8 +25,13 @@ public class SaveManager {
         if (createSaveFolder()) {
             // OK TO SAVE
             StringBuilder contents = new StringBuilder();
-            contents.append("name,amount,date,category,description\n");
+            contents.append("type,name,amount,date,category,description\n");
             for (Transaction txn : txnLog) {
+                if (txn instanceof Income){
+                    contents.append("income,");
+                } else {
+                    contents.append("expense,");
+                }
                 contents.append(txn.getName()).append(',');
                 contents.append(txn.getAmount()).append(',');
                 contents.append(txn.getDate()).append(',');
@@ -44,8 +51,9 @@ public class SaveManager {
                 // parse from csv
                 String[] properties = line.split(",");
 
-                // create transaction
-                Transaction txn = new Transaction();
+                // declare variables
+                Transaction txn;
+                String type;
                 String name;
                 int amount;
                 LocalDate date;
@@ -54,12 +62,22 @@ public class SaveManager {
 
                 // try to parse all properties, otherwise continue to next line
                 try {
-                    name = properties[0];
-                    amount = Integer.parseInt(properties[1]);
-                    date = LocalDate.parse(properties[2]);
-                    category = TransactionCategory.valueOf(properties[3].toUpperCase());
-                    description = properties[4].trim();
+                    type = properties[0];
+                    name = properties[1];
+                    amount = Integer.parseInt(properties[2]);
+                    date = LocalDate.parse(properties[3]);
+                    category = TransactionCategory.valueOf(properties[4].toUpperCase());
+                    description = properties[5].trim();
                 } catch (DateTimeParseException | IllegalArgumentException e) {
+                    continue;
+                }
+
+                // determine type
+                if (type.equals("income")) {
+                    txn = new Income();
+                } else if (type.equals("expense")) {
+                    txn = new Expense();
+                } else {
                     continue;
                 }
 

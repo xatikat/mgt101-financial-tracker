@@ -1,16 +1,38 @@
 package edu.neumont.csc150.models;
 
+import edu.neumont.csc150.models.comparators.*;
+
+import java.time.Month;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class TransactionLog extends ArrayList<Transaction>{
+    private final static List<String> SORT_TYPES = List.of(new String[]{"amount", "date", "category", "name"});
     private String name;
-    private int txnIndex = 0;
+    private int txnIndex;
+    private String sortType;
+
+    public TransactionLog() {
+        setTxnIndex(0);
+        setSortType("date");
+    }
 
     public int getTxnIndex() {
         return this.txnIndex;
     }
     public void setTxnIndex(int txnIndex) {
         this.txnIndex = txnIndex;
+    }
+
+    public String getSortType() {
+        return this.sortType;
+    }
+    public void setSortType(String sortType) {
+        if (SORT_TYPES.contains(sortType.toLowerCase())) {
+            this.sortType = sortType;
+        }
     }
 
     public String getName() {
@@ -49,10 +71,15 @@ public class TransactionLog extends ArrayList<Transaction>{
     //endregion
 
     /**
-     * Sorts the ArrayList by date, earliest come sfirst
+     * Sorts TransactionLog by currently stored sortType
      */
-    public void sortByDate() {
-        super.sort(new TransactionDateComparer());
+    public void sort() {
+        switch (getSortType()) {
+            case "amount" -> super.sort(new TransactionAmountComparator());
+            case "date" -> super.sort(new TransactionDateComparer());
+            case "category" -> super.sort(new TransactionCategoryComparator());
+            default -> super.sort(new TransactionNameComparator());
+        }
     }
 
     /**
@@ -74,6 +101,42 @@ public class TransactionLog extends ArrayList<Transaction>{
         // set to previous after deletion or to 0 if none left
         this.setTxnIndex(Math.max(index-1, 0));
         return removedTxn;
+    }
+
+    /**
+     * Get all possible YearMonth combos from current TransactionLog
+     * @return YearMonth ArrayList of combos existing in current log
+     */
+    public List<YearMonth> getPossibleDates() {
+        List<YearMonth> possibleDates = new ArrayList<>();
+        for (Transaction t: this) {
+            Month month = t.getDate().getMonth();
+            int year = t.getDate().getYear();
+            YearMonth possibleDate = YearMonth.of(year, month);
+            if (!possibleDates.contains(possibleDate)) {
+                possibleDates.add(possibleDate);
+            }
+        }
+        // sort whole list of possible dates (newest first) before returning
+        // so that we return the latest transactions first
+        possibleDates.sort(YearMonth::compareTo);
+        return possibleDates.reversed();
+    }
+
+    /**
+     * Gets all existing transactions under a specific YearMonth
+     * @return Transaction ArrayList of transactions with given YearMonth
+     */
+    public List<Transaction> getTransactionsFromYearMonth(YearMonth yearMonth) {
+        List<Transaction> txns = new ArrayList<>();
+        for (Transaction t : this) {
+            Month month = t.getDate().getMonth();
+            int year = t.getDate().getYear();
+            if (Objects.equals(yearMonth, YearMonth.of(year, month))) {
+                txns.add(t);
+            }
+        }
+        return txns;
     }
 
     @Override

@@ -20,6 +20,7 @@ public class TransactionViewUI {
                 case "previous", "prev", "p" -> {return "previous";}
                 case "edit", "e" -> {return "edit";}
                 case "delete", "del", "d" -> {return "delete";}
+                case "sort", "s" -> {return "sort";}
                 case "goto", "g" -> {return "goto";}
                 case "quit", "q" -> {return "quit";}
                 case "help", "h" -> displayAvailableCommands();
@@ -35,6 +36,7 @@ public class TransactionViewUI {
         Console.writeLn("previous (p)\t-\tgoes to the previous transaction", Console.TextColor.PURPLE);
         Console.writeLn("edit (e)\t\t-\tedit current transaction", Console.TextColor.PURPLE);
         Console.writeLn("delete (d)\t\t-\tdelete current transaction", Console.TextColor.PURPLE);
+        Console.writeLn("sort (s)\t\t-\t\tsorts the transactions in different ways", Console.TextColor.PURPLE);
         Console.writeLn("goto (g)\t\t-\tgo to a specific transaction in the list", Console.TextColor.PURPLE);
         Console.writeLn("quit (q)\t\t-\tgo back to the main menu", Console.TextColor.PURPLE);
     }

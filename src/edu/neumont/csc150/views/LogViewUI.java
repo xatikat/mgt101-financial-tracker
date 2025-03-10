@@ -1,15 +1,33 @@
 package edu.neumont.csc150.views;
 
+import edu.neumont.csc150.models.Transaction;
 import edu.neumont.csc150.models.TransactionLog;
+
+import java.time.YearMonth;
+import java.util.List;
 
 public class LogViewUI {
     /**
-     * Displays a TransactionLog as a whole
+     * Displays a TransactionLog as a whole (UNUSED)
      * @param txnLog TransactionLog to be displayed
      */
     public static void displayLog(TransactionLog txnLog) {
         Console.writeLn("Transaction Log:", Console.TextColor.PURPLE);
         Console.writeLn(txnLog.toString(), Console.TextColor.YELLOW);
+    }
+
+    /**
+     * Displays a set of Transactions from a specific YearMonth date
+     * @param date YearMonth date of the Transactions to be displayed
+     * @param txns ArrayList of Transactions to be displayed
+     */
+    public static void displayCurrentTransactions(YearMonth date, List<Transaction> txns) {
+        Console.write("Transaction Log (", Console.TextColor.PURPLE);
+        Console.write(date.toString(), Console.TextColor.PURPLE);
+        Console.writeLn("):", Console.TextColor.PURPLE);
+        for (Transaction txn: txns) {
+            Console.writeLn(txn.toShortString(), Console.TextColor.YELLOW);
+        }
     }
 
     /**
@@ -19,8 +37,10 @@ public class LogViewUI {
     public static String getLogViewInput() {
         while(true) {
             String choiceS = Console.getStringInput("Enter a command (type help for available commands):", false, Console.TextColor.BLUE).toLowerCase();
+            Console.writeLn("");
             switch (choiceS) {
-                case "goto", "g" -> {return "goto";}
+                case "next", "n" -> {return "next";}
+                case "previous", "p" -> {return "previous";}
                 case "sort", "s" -> {return "sort";}
                 case "balance", "b" -> {return "balance";}
                 case "quit", "q" -> {return "quit";}
@@ -31,19 +51,24 @@ public class LogViewUI {
     }
 
     public static void displayAvailableCommands() {
-        Console.writeLn("Available Commands:", Console.TextColor.PURPLE);
-        // selection thing here if enough time, would require to remove toString from collection but is ok
-        // would be cool!
+        Console.writeLn("Available Commands:", Console.TextColor.BLUE);
         Console.writeLn("""
-                        goto (g)\t\t-\t\tallows the user to go to a specific transaction in the log
+                        next (n)\t\t-\t\ttraverses to the next month of transactions
+                        previous (p)\t-\t\ttraverses to the previous month of transactions
                         sort (s)\t\t-\t\tsorts the transactions in different ways
-                        balance (p)\t\t-\t\tcalculates the total balance of the log
+                        balance (p)\t\t-\t\tcalculates the balance of the log being viewed
                         quit (q)\t\t-\t\tgoes back to the main menu
                         help (h)\t\t-\t\tdisplays this command list
-                        """, Console.TextColor.YELLOW);
+                        """, Console.TextColor.PURPLE);
     }
 
     public static void displayInvalidCommand() {
         Console.writeLn("Invalid command! Please enter a valid command.", Console.TextColor.RED);
+    }
+
+    public static void displayBalance(float balance) {
+        Console.write("\nBalance: ", Console.TextColor.PURPLE);
+        Console.writeLn(String.format("$%,.2f", balance), Console.TextColor.GREEN);
+        Console.getStringInput("(Press enter to return)", true, Console.TextColor.CYAN);
     }
 }

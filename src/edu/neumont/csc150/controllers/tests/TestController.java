@@ -1,6 +1,8 @@
 package edu.neumont.csc150.controllers.tests;
 
 import edu.neumont.csc150.controllers.SaveController;
+import edu.neumont.csc150.models.Expense;
+import edu.neumont.csc150.models.Income;
 import edu.neumont.csc150.models.Transaction;
 import edu.neumont.csc150.models.TransactionLog;
 import edu.neumont.csc150.models.enums.TransactionCategory;
@@ -16,10 +18,10 @@ public class TestController {
     }
 
     public void testSort() {
-        Transaction t1 = new Transaction();
-        Transaction t2 = new Transaction();
-        Transaction t3 = new Transaction();
-        Transaction t4 = new Transaction();
+        Transaction t1 = new Income();
+        Transaction t2 = new Expense();
+        Transaction t3 = new Income();
+        Transaction t4 = new Expense();
 
         t1.setProperties("Burger (Transaction 1)", 200, LocalDate.parse("2024-12-20"), TransactionCategory.NEEDS, "");
         t2.setProperties("Burger (Transaction 2)", 200, LocalDate.parse("2024-12-10"), TransactionCategory.NEEDS, "");
@@ -31,7 +33,7 @@ public class TestController {
         transactionLog.add(t3);
         transactionLog.add(t4);
 
-        transactionLog.sortByDate();
+        transactionLog.sort();
 
         for (Transaction t : transactionLog) {
             System.out.println(t.getName());

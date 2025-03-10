@@ -17,7 +17,7 @@ public class TransactionViewController {
                     //edits current txn
                     Transaction newTxn = TransactionController.editTxn(txnLog.get(txnLog.getTxnIndex()));
                     txnLog.set(txnLog.getTxnIndex(), newTxn);
-                    txnLog.sortByDate();
+                    txnLog.sort();
                     SaveController.saveState(txnLog.getName(), txnLog);
                 }
                 case "delete" -> {
@@ -25,6 +25,12 @@ public class TransactionViewController {
                     if (TransactionViewUI.confirmDeletion()) {
                         txnLog.remove(txnLog.getTxnIndex());
                     }
+                }
+                case "sort" -> {
+                    String sortChoice = AppUI.getSortInput();
+                    txnLog.setSortType(sortChoice);
+                    txnLog.sort();
+                    txnLog.setTxnIndex(0);
                 }
                 case "goto" -> {
                     //goto command

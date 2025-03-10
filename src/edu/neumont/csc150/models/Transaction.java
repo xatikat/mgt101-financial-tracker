@@ -4,7 +4,7 @@ import edu.neumont.csc150.models.enums.TransactionCategory;
 
 import java.time.LocalDate;
 
-public class Transaction implements Comparable<Transaction> {
+public abstract class Transaction implements Comparable<Transaction> {
     private String name;
     private int amount;
     private LocalDate date;
@@ -63,13 +63,19 @@ public class Transaction implements Comparable<Transaction> {
         setDescription(description);
     }
 
+    /**
+     * Sorts between
+     * @param o the object to be compared.
+     * @return
+     */
     @Override
     public int compareTo(Transaction o) {
-        int dateCompare = getDate().compareTo(o.getDate())*-1;
-        if (dateCompare == 0) {
-            return getName().compareTo(o.getName());
+        if ((this instanceof Income && o instanceof Income) || (this instanceof Expense && o instanceof Expense)) {
+            return 0;
+        } else if (this instanceof Income) {
+            return -1;
         } else {
-            return dateCompare;
+            return 1;
         }
     }
 
