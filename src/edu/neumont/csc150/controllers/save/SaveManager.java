@@ -1,9 +1,6 @@
-package edu.neumont.csc150.controllers;
+package edu.neumont.csc150.controllers.save;
 
-import edu.neumont.csc150.models.Expense;
-import edu.neumont.csc150.models.Income;
-import edu.neumont.csc150.models.Transaction;
-import edu.neumont.csc150.models.TransactionLog;
+import edu.neumont.csc150.models.*;
 import edu.neumont.csc150.models.enums.TransactionCategory;
 
 import java.io.*;
@@ -17,11 +14,15 @@ public class SaveManager {
     private static final String SAVE_FOLDER = "save";
     private static final String FILE_EXTENSION = "csv";
 
-    private static String getFullSaveGamePath() {
+    private static String getFullSaveDataPath() {
         return DATA_FOLDER + '/' + SAVE_FOLDER + '/';
     }
 
-    public static void save(String saveName, TransactionLog txnLog) {
+    private static String getFullSaveUserPath(String username) {
+        return getFullSaveDataPath() + username + '/';
+    }
+
+    public static void saveTransactions(String username, TransactionLog txnLog) {
         if (createSaveFolder()) {
             // OK TO SAVE
             StringBuilder contents = new StringBuilder();
@@ -38,15 +39,15 @@ public class SaveManager {
                 contents.append(txn.getCategory()).append(',');
                 contents.append(txn.getDescription()).append('\n');
             }
-            writeSave(saveName, contents.toString());
+            writeSave(username, "transactions", contents.toString());
         }
     }
 
-    public static TransactionLog load(String saveName) {
-        List<String> saveData = readSave(saveName);
+    public static TransactionLog loadTransactions(String username) {
+        List<String> saveData = readSave(username, "transactions");
         TransactionLog txnLog = new TransactionLog();
         // parse if there is any data, otherwise skip
-        if (saveData != null ) {
+        if (saveData != null) {
             for (String line : saveData) {
                 // parse from csv
                 String[] properties = line.split(",");
@@ -55,7 +56,7 @@ public class SaveManager {
                 Transaction txn;
                 String type;
                 String name;
-                int amount;
+                float amount;
                 LocalDate date;
                 TransactionCategory category;
                 String description;
@@ -64,7 +65,7 @@ public class SaveManager {
                 try {
                     type = properties[0];
                     name = properties[1];
-                    amount = Integer.parseInt(properties[2]);
+                    amount = Float.parseFloat(properties[2]);
                     date = LocalDate.parse(properties[3]);
                     category = TransactionCategory.valueOf(properties[4].toUpperCase());
                     description = properties[5].trim();
@@ -88,17 +89,56 @@ public class SaveManager {
         return txnLog;
     }
 
+    public static void saveGoals(String username, List<Goal> goalLog) {
+        if (createSaveFolder()) {
+            // OK TO SAVE
+            StringBuilder contents = new StringBuilder();
+            contents.append("name,amount,category\n");
+            for (Goal goal : goalLog) {
+                contents.append(goal.getGoalName()).append(',');
+                contents.append(goal.getGoalAmount()).append(',');
+                contents.append(goal.getGoalCategory()).append('\n');
+            }
+            writeSave(username, "goals", contents.toString());
+        }
+    }
+
+    public static List<Goal> loadGoals(String username) {
+        List<String> saveData = readSave(username, "goals");
+        List<Goal> goalLog = new ArrayList<>();
+        if (saveData != null) {
+            for (String line: saveData) {
+                String[] properties = line.split(",");
+
+                Goal goal;
+                String goalName;
+                float goalAmount;
+                TransactionCategory goalCategory;
+                try {
+                    goalName = properties[0];
+                    goalAmount = Float.parseFloat(properties[1]);
+                    goalCategory = TransactionCategory.valueOf(properties[2].toUpperCase());
+                } catch (IllegalArgumentException ex) {
+                    continue;
+                }
+                goal = new Goal(goalName, goalAmount, goalCategory);
+                goalLog.add(goal);
+            }
+        }
+        return goalLog;
+    }
+
     public static String[] getAllSaveFiles() {
-        File saveFolder = new File(getFullSaveGamePath());
+        File saveFolder = new File(getFullSaveDataPath());
         if (saveFolder.exists()) {
             return saveFolder.list();
         }
         return null;
     }
 
-    private static void writeSave(String saveName, String contents) {
+    private static void writeSave(String username, String filename, String contents) {
         try {
-            String path = getFullSaveGamePath() + saveName + '.' + FILE_EXTENSION;
+            String path = getFullSaveUserPath(username) + filename + '.' + FILE_EXTENSION;
             OutputStream fileOut = new FileOutputStream(path, false);
             Writer writer = new OutputStreamWriter(fileOut);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
@@ -120,10 +160,10 @@ public class SaveManager {
         }
     }
 
-    private static List<String> readSave(String saveName) {
+    private static List<String> readSave(String username, String filename) {
         try {
             // create buffered reader based on save path
-            String path = getFullSaveGamePath() + saveName + '.' + FILE_EXTENSION;
+            String path = getFullSaveUserPath(username) + filename + '.' + FILE_EXTENSION;
             InputStream fileIn = new FileInputStream(path);
             Reader reader = new InputStreamReader(fileIn);
             BufferedReader bufferedReader = new BufferedReader(reader);

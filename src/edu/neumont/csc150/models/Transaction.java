@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public abstract class Transaction implements Comparable<Transaction> {
     private String name;
-    private int amount;
+    private float amount;
     private LocalDate date;
     private TransactionCategory category;
     private String description;
@@ -20,10 +20,10 @@ public abstract class Transaction implements Comparable<Transaction> {
         }
     }
 
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
-    private void setAmount(int amount) {
+    private void setAmount(float amount) {
         if (amount > 0) {
             this.amount = amount;
         }
@@ -55,12 +55,20 @@ public abstract class Transaction implements Comparable<Transaction> {
     }
 
 
-    public void setProperties(String name, int amount, LocalDate date, TransactionCategory category, String description) {
+    public void setProperties(String name, float amount, LocalDate date, TransactionCategory category, String description) {
         setName(name);
         setAmount(amount);
         setDate(date);
         setCategory(category);
         setDescription(description);
+    }
+
+    /**
+     * Returns formatted amount as $
+     * @return String of formatted amount
+     */
+    public String getAmountString() {
+        return String.format("$%,.2f", getAmount());
     }
 
     /**
@@ -83,7 +91,7 @@ public abstract class Transaction implements Comparable<Transaction> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Name:\t\t\t\t").append(getName()).append("\n");
-        sb.append("Amount:\t\t\t\t").append(getAmount()).append("\n");
+        sb.append("Amount:\t\t\t\t").append(getAmountString()).append("\n");
         sb.append("Date:\t\t\t\t").append(getDate()).append("\n");
         sb.append("Category:\t\t\t").append(getCategory()).append("\n");
         sb.append("Description:\t\t").append(getDescription()).append("\n");
@@ -94,9 +102,9 @@ public abstract class Transaction implements Comparable<Transaction> {
         StringBuilder sb = new StringBuilder();
         sb.append(getDate()).append(" - ");
         if (this instanceof Expense) {
-            sb.append("(").append(getAmount()).append(")");
+            sb.append("(").append(getAmountString()).append(")");
         } else {
-            sb.append(getAmount());
+            sb.append(getAmountString());
         }
         sb.append(" - ");
         sb.append(getName());

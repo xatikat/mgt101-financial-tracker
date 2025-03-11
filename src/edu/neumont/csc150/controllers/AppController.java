@@ -1,10 +1,17 @@
 package edu.neumont.csc150.controllers;
 
+import edu.neumont.csc150.controllers.save.SaveController;
+import edu.neumont.csc150.controllers.save.SaveManager;
+import edu.neumont.csc150.controllers.save.UserManager;
 import edu.neumont.csc150.models.*;
 import edu.neumont.csc150.views.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppController {
     private static final TransactionLog txnLog = new TransactionLog();
+    private static final ArrayList<Goal> goalLog = new ArrayList<>();
 
     public void run() {
         // let user login and attempt to load data
@@ -29,13 +36,11 @@ public class AppController {
                 }
                 case 3 -> {
                     // Transaction history page
-                    LogViewController.viewCollection(txnLog);
+                    LogViewController.viewCollection(txnLog, goalLog);
                 }
                 case 4 -> {
-                    // Current balances page
-                }
-                case 5 -> {
                     // Goals page
+                    GoalController.viewGoalMenu(goalLog);
                 }
                 default -> {
                     // Quit
@@ -43,7 +48,7 @@ public class AppController {
                 }
             }
             // save after every main menu action is completed
-            SaveController.saveState(txnLog.getName(), txnLog);
+            SaveController.saveState(txnLog.getName(), txnLog, goalLog);
         }
         while (doContinue);
     }
@@ -55,10 +60,15 @@ public class AppController {
     private static void loadData(String username) {
         txnLog.setName(username);
         if (SaveController.doesSaveExist(username)) {
-            TransactionLog loadData = SaveController.loadState(username);
-            if (!loadData.isEmpty()) {
-                txnLog.copyFrom(loadData);
+            TransactionLog txnsData = SaveManager.loadTransactions(username);
+            List<Goal> goalData = SaveManager.loadGoals(username);
+
+            if (!txnsData.isEmpty()) {
+                txnLog.copyFrom(txnsData);
                 txnLog.sort();
+            }
+            if (!goalData.isEmpty()) {
+                goalLog.addAll(goalData);
             }
         }
     }
@@ -74,9 +84,9 @@ public class AppController {
             // if it does, get password and check both creds against database
             // return username if creds exist, otherwise we will display login error
             String username = AppUI.getUsernameInput();
-            if (UserController.checkUsername(username)) {
+            if (UserManager.checkUsername(username)) {
                 String password = AppUI.getPasswordInput();
-                if (UserController.checkCredentials(username, password)) {
+                if (UserManager.checkCredentials(username, password)) {
                     return username;
                 } else {
                     AppUI.displayLoginError();
@@ -87,7 +97,7 @@ public class AppController {
             else {
                 if (AppUI.getUserContinueIfUncreated()) {
                     String password = AppUI.getPasswordInput();
-                    UserController.addCredsToFile(username, password);
+                    UserManager.addCredsToFile(username, password);
                     return username;
                 }
             }

@@ -1,9 +1,9 @@
-package edu.neumont.csc150.controllers;
+package edu.neumont.csc150.controllers.save;
 
 import java.util.*;
 import java.io.*;
 
-public class UserController {
+public class UserManager {
     private static final String DATA_FOLDER = "data";
     private static final String FILENAME = "credentials";
     private static final String FILE_EXT = "csv";

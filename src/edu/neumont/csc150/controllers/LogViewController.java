@@ -1,9 +1,6 @@
 package edu.neumont.csc150.controllers;
 
-import edu.neumont.csc150.models.Expense;
-import edu.neumont.csc150.models.Income;
-import edu.neumont.csc150.models.Transaction;
-import edu.neumont.csc150.models.TransactionLog;
+import edu.neumont.csc150.models.*;
 import edu.neumont.csc150.views.AppUI;
 import edu.neumont.csc150.views.LogViewUI;
 
@@ -11,11 +8,10 @@ import java.time.YearMonth;
 import java.util.List;
 
 public class LogViewController {
-
-
-    public static void viewCollection(TransactionLog txnLog) {
+    public static void viewCollection(TransactionLog txnLog, List<Goal> goalLog) {
         List<YearMonth> dates = txnLog.getPossibleDates();
         int dateIndex = 0;
+
         boolean doContinueViewing = true;
         AppUI.displayHR();
         while (doContinueViewing) {
@@ -48,6 +44,10 @@ public class LogViewController {
                 }
                 case "goals" -> {
                     // TODO implement goals and put a command to view them here
+                    LogViewUI.displayGoalHeader();
+                    for (Goal goal : goalLog) {
+                        LogViewUI.displayGoal(goal, calculateCurrentGoal(goal, currentTxns));
+                    }
                 }
                 case "quit" -> doContinueViewing = false;
             }
@@ -64,5 +64,25 @@ public class LogViewController {
             }
         }
         return balance;
+    }
+
+    public static float calculateCurrentGoal(Goal goal, List<Transaction> currentTxns) {
+        float spendingTotal = 0;
+        if (goal.getGoalCategory() != null) {
+            // if the goal has a category, only count category-specific spending
+            for (Transaction t: currentTxns) {
+                if (t.getCategory() == goal.getGoalCategory() && t instanceof Expense) {
+                    spendingTotal += t.getAmount();
+                }
+            }
+        } else {
+            // for if the goal has no category, then it applies to all spending
+            for (Transaction t: currentTxns) {
+                if (t instanceof Expense) {
+                    spendingTotal += t.getAmount();
+                }
+            }
+        }
+        return spendingTotal;
     }
 }

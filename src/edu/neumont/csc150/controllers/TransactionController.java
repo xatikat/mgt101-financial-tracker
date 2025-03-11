@@ -45,7 +45,7 @@ public class TransactionController {
         } while (true);
     }
 
-    private static TransactionCategory getTxnCat() {
+    public static TransactionCategory getTxnCat() {
         do {
             String categoryS = TransactionUI.getTxnCatInput();
             try {
@@ -68,7 +68,7 @@ public class TransactionController {
 
         // get old values
         String name = txn.getName();
-        int amount = txn.getAmount();
+        float amount = txn.getAmount();
         LocalDate date = txn.getDate();
         TransactionCategory category = txn.getCategory();
         String description = txn.getDescription();

@@ -18,7 +18,6 @@ public class TransactionViewController {
                     Transaction newTxn = TransactionController.editTxn(txnLog.get(txnLog.getTxnIndex()));
                     txnLog.set(txnLog.getTxnIndex(), newTxn);
                     txnLog.sort();
-                    SaveController.saveState(txnLog.getName(), txnLog);
                 }
                 case "delete" -> {
                     //deletes current txn

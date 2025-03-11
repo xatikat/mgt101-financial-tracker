@@ -1,5 +1,6 @@
 package edu.neumont.csc150.views;
 
+import edu.neumont.csc150.models.Goal;
 import edu.neumont.csc150.models.Transaction;
 
 import java.time.YearMonth;
@@ -33,6 +34,7 @@ public class LogViewUI {
                 case "previous", "p" -> {return "previous";}
                 case "sort", "s" -> {return "sort";}
                 case "balance", "b" -> {return "balance";}
+                case "goal", "goals", "g" -> {return "goals";}
                 case "quit", "q" -> {return "quit";}
                 case "help", "h" -> displayAvailableCommands();
                 default -> displayInvalidCommand();
@@ -47,6 +49,7 @@ public class LogViewUI {
                         previous (p)\t-\t\ttraverses to the previous month of transactions
                         sort (s)\t\t-\t\tsorts the transactions in different ways
                         balance (p)\t\t-\t\tcalculates the balance of the log being viewed
+                        goals (g)\t\t-\t\tdisplays all goals based on month being viewed
                         quit (q)\t\t-\t\tgoes back to the main menu
                         help (h)\t\t-\t\tdisplays this command list
                         """, Console.TextColor.PURPLE);
@@ -60,5 +63,14 @@ public class LogViewUI {
         Console.write("\nBalance: ", Console.TextColor.PURPLE);
         Console.writeLn(String.format("$%,.2f", balance), Console.TextColor.GREEN);
         Console.getStringInput("(Press enter to return)", true, Console.TextColor.CYAN);
+    }
+
+    public static void displayGoalHeader() {
+        Console.writeLn("");
+    }
+
+    public static void displayGoal(Goal goal, float spendingTotal) {
+        Console.writeLn(goal.toString(), Console.TextColor.YELLOW);
+        Console.writeLn("Status: " + String.format("$%,.2f",spendingTotal) + "/" + String.format("$%,.2f",goal.getGoalAmount()) + '\n', Console.TextColor.YELLOW);
     }
 }

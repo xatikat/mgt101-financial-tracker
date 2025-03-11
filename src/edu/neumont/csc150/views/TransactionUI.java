@@ -28,7 +28,7 @@ public class TransactionUI {
     }
 
     public static String getTxnCatInput() {
-        return Console.getStringInput("Enter transaction category (Type list for a list of valid categories):", false, Console.TextColor.BLUE).toLowerCase();
+        return Console.getStringInput("Enter transaction category (Type list for valid categories):", false, Console.TextColor.BLUE).toLowerCase();
     }
 
     public static void displayValidCategories() {

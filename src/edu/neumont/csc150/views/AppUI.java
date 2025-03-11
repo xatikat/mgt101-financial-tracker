@@ -6,10 +6,9 @@ public class AppUI {
                 1. Add Income / Expense
                 2. View Specific Transaction
                 3. View Transaction History (By Month)
-                4. View Current Balances
-                5. View Financial Goals
-                6. Quit
-                """, 1, 6, Console.TextColor.BLUE);
+                4. View and Create Goals
+                5. Quit
+                """, 1, 5, Console.TextColor.BLUE);
     }
 
     public static void displayHR() {

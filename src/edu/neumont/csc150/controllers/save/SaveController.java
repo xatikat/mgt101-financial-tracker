@@ -1,8 +1,9 @@
-package edu.neumont.csc150.controllers;
+package edu.neumont.csc150.controllers.save;
 
+import edu.neumont.csc150.models.Goal;
 import edu.neumont.csc150.models.TransactionLog;
 
-import java.io.FileNotFoundException;
+import java.util.List;
 
 public class SaveController {
     public static void run() {
@@ -16,12 +17,9 @@ public class SaveController {
         }
     }
 
-    public static void saveState(String username, TransactionLog txnLog) {
-        SaveManager.save(username, txnLog);
-    }
-
-    public static TransactionLog loadState(String username) {
-        return SaveManager.load(username);
+    public static void saveState(String username, TransactionLog txnLog, List<Goal> goalLog) {
+        SaveManager.saveTransactions(username, txnLog);
+        SaveManager.saveGoals(username, goalLog);
     }
 
     public static boolean doesSaveExist(String username) {
