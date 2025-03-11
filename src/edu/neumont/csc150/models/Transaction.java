@@ -106,8 +106,8 @@ public abstract class Transaction implements Comparable<Transaction> {
         } else {
             sb.append(getAmountString());
         }
-        sb.append(" - ");
-        sb.append(getName());
+        sb.append(" - ").append(getCategory());
+        sb.append(" - ").append(getName());
         return sb.toString();
     }
 }

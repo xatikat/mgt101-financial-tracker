@@ -48,6 +48,7 @@ public class LogViewController {
                     for (Goal goal : goalLog) {
                         LogViewUI.displayGoal(goal, calculateCurrentGoal(goal, currentTxns));
                     }
+                    LogViewUI.displayEnterBar();
                 }
                 case "quit" -> doContinueViewing = false;
             }

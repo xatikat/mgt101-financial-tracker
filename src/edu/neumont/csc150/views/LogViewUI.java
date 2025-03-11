@@ -62,15 +62,19 @@ public class LogViewUI {
     public static void displayBalance(float balance) {
         Console.write("\nBalance: ", Console.TextColor.PURPLE);
         Console.writeLn(String.format("$%,.2f", balance), Console.TextColor.GREEN);
-        Console.getStringInput("(Press enter to return)", true, Console.TextColor.CYAN);
+        displayEnterBar();
     }
 
     public static void displayGoalHeader() {
-        Console.writeLn("");
+        Console.writeLn("Existing Goals:", Console.TextColor.PURPLE);
     }
 
     public static void displayGoal(Goal goal, float spendingTotal) {
         Console.writeLn(goal.toString(), Console.TextColor.YELLOW);
         Console.writeLn("Status: " + String.format("$%,.2f",spendingTotal) + "/" + String.format("$%,.2f",goal.getGoalAmount()) + '\n', Console.TextColor.YELLOW);
+    }
+
+    public static void displayEnterBar() {
+        Console.getStringInput("(Press enter to return)", true, Console.TextColor.CYAN);
     }
 }
