@@ -3,7 +3,6 @@ package edu.neumont.csc150.controllers;
 import edu.neumont.csc150.models.Goal;
 import edu.neumont.csc150.models.enums.TransactionCategory;
 import edu.neumont.csc150.views.AppUI;
-import edu.neumont.csc150.views.Console;
 import edu.neumont.csc150.views.GoalUI;
 import edu.neumont.csc150.views.TransactionUI;
 

@@ -38,7 +38,7 @@ public class Goal {
 
     /**
      * Returns formatted amount as $
-     * @return
+     * @return Formatted String
      */
     public String getGoalAmountString() {
         return String.format("$%,.2f", getGoalAmount());
